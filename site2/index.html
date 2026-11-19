@@ -128,7 +128,7 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
   .features{display:grid;grid-template-columns:1fr 1fr;gap:18px 40px;margin-top:44px;max-width:1000px;margin-left:auto;margin-right:auto}
   .feature{display:flex;gap:16px;align-items:flex-start;padding:18px;border-radius:var(--radius);background:var(--paper);box-shadow:0 6px 16px rgba(0,0,0,.05)}
   .num{flex:none;width:40px;height:40px;border-radius:50%;background:var(--sand);color:var(--ink);display:grid;place-items:center;font-weight:700;font-size:15px}
-  .feature h4{font-size:18px;font-weight:700;margin-bottom:4px}
+  .feature h3{font-size:18px;font-weight:700;margin-bottom:4px}
   .feature p{color:var(--muted);font-size:15px}
 
   /* timeline */
@@ -148,7 +148,7 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
   .step-img img{width:100%;height:100%;object-fit:cover}
   .time{color:var(--sand-dark);font-weight:600;font-size:24px;letter-spacing:-.2px}
   .place{color:var(--sand-dark);font-weight:600;font-size:17px;margin-top:2px}
-  .step h4{font-weight:600;font-size:30px;letter-spacing:-.5px;line-height:1.2;margin:10px 0 14px}
+  .step h3{font-weight:600;font-size:30px;letter-spacing:-.5px;line-height:1.2;margin:10px 0 14px}
   .step p{color:var(--muted);font-size:18px;margin-bottom:14px}
   .list{list-style:none;display:flex;flex-direction:column;gap:10px}
   .list li{display:flex;gap:10px;align-items:center;color:var(--navy);font-weight:600;font-size:16px}
@@ -231,6 +231,7 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
   .zalo-card img{width:116px;height:116px;border-radius:10px;background:#fff;flex:none}
   .zalo-card b{display:block;font-size:16px;margin-bottom:4px}
   .zalo-card span{color:var(--muted);font-size:14px}
+  .zalo-card .c-ico,.zalo-card .c-ico span{color:var(--ink)}
   .z-mob{display:none}
   .z-ico{display:none;font-size:11px;font-weight:800;letter-spacing:.2px}
   /* phones: messengers first (one tap to write), the QR is pointless on the same phone */
@@ -238,7 +239,7 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
     .contact-list{order:-1}
     .zalo-card{gap:14px;padding:16px 18px}
     .zalo-card img{display:none}
-    .zalo-card .z-ico{display:grid;color:#fff;font-size:11px}
+    .zalo-card .z-ico{display:grid;color:var(--ink);font-size:11px}
     .zalo-card .z-desk{display:none}
     .zalo-card .z-mob{display:block}
     .c-card{padding:16px 18px}
@@ -302,7 +303,7 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
     .stat span{font-size:12px}
     .card-img{height:210px}
     .card-body{padding:20px}
-    .step h4{font-size:26px}
+    .step h3{font-size:26px}
     .time{font-size:21px}
     .banner{min-height:380px}
     .logo small{display:none}
@@ -409,7 +410,7 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
   .tc-price b{color:var(--sand-dark);font-size:22px}
   .tc-price small{color:var(--muted);font-size:13px;font-weight:600}
   .tc-btns{display:flex;gap:10px;margin-top:6px}
-  .tc-btns .btn{flex:1;min-height:46px;padding:10px 14px;font-size:15px}
+  .tc-btns .btn{flex:1 1 auto;min-height:46px;padding:10px 14px;font-size:15px;white-space:nowrap}
   .more-card .tc-btns{flex-direction:column;gap:8px}
   #more{scroll-margin-top:20px}
   /* --- more tours --- */
@@ -2037,7 +2038,7 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
       "rev.kicker": "Đánh giá",
       "rev.title": "Khách hàng nói gì",
       "rev.lead": "Đánh giá thật từ nhóm Telegram “Du thuyền Nha Trang” của chúng tôi với hơn 600 thành viên.",
-      "rev.all": "Xem tất cả đánh giá trên Telegram",
+      "rev.all": "Xem đánh giá trên Telegram",
       "rev.tr": "Dịch từ tiếng Nga",
       "rev.tour": "Tour biển",
       "nav.tours": "Tour",
@@ -2346,17 +2347,24 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var NBSP = "\u00a0";
+  // short words that must not stay alone at the end of a line: glued to the next word with a no-break space
   var SHORT = {
-    ru: /(^|[\s(«„"])(а|в|во|и|к|ко|о|об|с|со|у|не|ни|на|по|до|за|из|от|для|без|при|про|над|под|но|или|что|как)\s+/gi,
-    fr: /(^|[\s(«"])(à|a|au|aux|de|du|des|le|la|les|l’|un|une|et|en|ou|par|pour|sur|sans|dans)\s+/gi,
-    en: /(^|[\s("])(a|an|the|to|of|in|on|at|by|for|and|or)\s+/gi,
+    ru: /^(а|в|во|и|к|ко|о|об|обо|с|со|у|не|ни|на|по|до|за|из|от|для|без|при|про|над|под|но|или|что|как|же|ли|бы|её|их|его|это|все|всё)$/i,
+    fr: /^(à|a|au|aux|de|du|des|le|la|les|l’|un|une|et|en|ou|par|pour|sur|sans|dans|ce|ces|se|ne|y|il|on|vos|nos|votre|notre)$/i,
+    en: /^(a|an|the|to|of|in|on|at|by|for|and|or|our|your|with|from|is|are|be|we|you|it)$/i,
     vi: null
   };
   function typo(t) {
     if (typeof t !== "string") return t;
     var re = SHORT[lang];
-    if (re) { t = t.replace(re, "$1$2" + NBSP); t = t.replace(re, "$1$2" + NBSP); }
+    if (re) {
+      var w = t.split(" "), out = w[0];
+      for (var i = 1; i < w.length; i++) out += (re.test(w[i - 1].replace(/^[(«„"“]+/, "")) && w[i] ? NBSP : " ") + w[i];
+      t = out;
+    }
     t = t.replace(/\s+(—|–)\s/g, NBSP + "$1 ");                       // dash never starts a line
+    t = t.replace(/(\s)(\S{1,10}) (\S{1,10}[.!?…]?)$/, function (m, sp, a, b) { return (a + b).length <= 12 ? sp + a + NBSP + b : m; });   // no single word on the last line
+    t = t.replace(/(\d) (?=\d{3}\b)/g, "$1" + NBSP).replace(/(\d) (?=\d{3}\b)/g, "$1" + NBSP);   // 1 050 000 stays on one line
     t = t.replace(/(\d)\s+(?=(км|km|м|m|ч|h|мин|min|часов|часа|мест|seats|places|chỗ|giờ|phút|₫|VND|%|человек)\b|₫)/g, "$1" + NBSP);
     if (lang === "fr") t = t.replace(/\s+([:;!?»])/g, NBSP + "$1").replace(/«\s+/g, "«" + NBSP);
     return t;
@@ -2376,7 +2384,7 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
 
   function renderDynamic() {
     $("#sea-features").innerHTML = FEATURES.map(function (f, i) {
-      return '<div class="feature"><span class="num">' + (i + 1) + '</span><div><h4>' + esc(pick(f.t)) + '</h4><p>' + esc(pick(f.d)) + '</p></div></div>';
+      return '<div class="feature"><span class="num">' + (i + 1) + '</span><div><h3>' + esc(pick(f.t)) + '</h3><p>' + esc(pick(f.d)) + '</p></div></div>';
     }).join("");
 
     $("#sea-timeline").innerHTML = SEA_ROUTE.map(function (r, i) {
@@ -2394,7 +2402,7 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
       return '<article class="step' + (s.flip ? ' flip' : '') + '">' +
         '<div class="step-img"><img src="' + s.img + '"' + ssAttr(s.img, "(max-width: 700px) 92vw, 560px") + ' alt="" loading="lazy" decoding="async"></div>' +
         '<div><div class="time">' + esc(s.time) + '</div>' + place +
-        '<h4>' + esc(pick(s.title)) + '</h4><p>' + esc(pick(s.text)) + '</p>' + items + addr + '</div></article>';
+        '<h3>' + esc(pick(s.title)) + '</h3><p>' + esc(pick(s.text)) + '</p>' + items + addr + '</div></article>';
     }).join("");
 
     $("#inc-grid").innerHTML = pick(INCLUDED).map(function (x) { return '<div class="inc">' + esc(x) + '</div>'; }).join("");
@@ -2405,7 +2413,7 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
       return '<article class="step' + (i % 2 ? ' flip' : '') + '">' +
         (s.tiles ? '<div class="step-img tiles">' + s.tiles.map(function (t) { return '<img src="' + t + '"' + ssAttr(t, "(max-width: 700px) 46vw, 270px") + ' alt="" loading="lazy" decoding="async">'; }).join("") + '</div>'
                  : '<div class="step-img"><img src="' + s.img + '"' + ssAttr(s.img, "(max-width: 700px) 92vw, 560px") + ' alt="" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=\'' + s.fb + '\'"></div>') +
-        '<div><div class="time">' + esc(s.time) + '</div><h4>' + esc(pick(s.title)) + '</h4><p>' + esc(pick(s.text)) + '</p>' + items + '</div></article>';
+        '<div><div class="time">' + esc(s.time) + '</div><h3>' + esc(pick(s.title)) + '</h3><p>' + esc(pick(s.text)) + '</p>' + items + '</div></article>';
     }).join("");
     $("#reviews").innerHTML = REVIEWS.map(function (r) {
       return '<figure class="rev"><blockquote>' + esc(pick(r.t)) + '</blockquote><figcaption><span class="rev-av">' + esc(pick(r.n).charAt(0)) + '</span><span><b>' + esc(pick(r.n)) + '</b><small>' + esc(tx("rev.tour")) + ' · ' + esc(pick(r.d)) + '</small></span></figcaption>' +

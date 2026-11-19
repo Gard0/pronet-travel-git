@@ -73,6 +73,9 @@ def seo_block(key, url, title):
             '<meta name="twitter:title" content="%s">\n<meta name="twitter:description" content="%s">\n<meta name="twitter:image" content="%s/img/hero.jpg">'
             % (e(desc), url, alts, url, loc, e(title), e(desc), BASE, e(title), e(desc), BASE))
 
+import base64, io
+from PIL import Image as _I
+_buf = io.BytesIO(); _I.open('site2/img/logo.png').convert('RGB').save(_buf, 'WEBP', quality=86); LOGO = 'data:image/webp;base64,' + base64.b64encode(_buf.getvalue()).decode()
 def page(lang, key, url):
     s = src
     d = D[lang]
@@ -89,6 +92,7 @@ def page(lang, key, url):
         if not k: return art
         return re.sub(r'(<a class="card-img"[^>]*>\s*<img [^>]*?)alt="[^"]*"', lambda n: n.group(1) + 'alt="%s"' % html.escape(d.get(k.group(1), ''), quote=True), art, count=1)
     body = re.sub(r'<article class="card[^"]*">.*?</article>', card_alt, body, flags=re.S)
+    body = body.replace('<img src="/img/logo.png" alt="" width="46" height="46">', '<img src="%s" alt="" width="46" height="46">' % LOGO)   # tiny inline logo: no request, paints at once
     body = body.replace('<!--SEO-->', seo_block(key, url, d['meta.title']) + '\n' + jsonld(lang, url, d))
     fonts = ['latin'] + {'ru': ['cyrillic'], 'vi': ['vietnamese'], 'fr': [], 'en': []}[lang]
     body = body.replace('<!--FONTPRELOAD-->', '\n'.join('<link rel="preload" as="font" type="font/woff2" href="/fonts/manrope-%s.woff2" crossorigin>' % f for f in fonts))
