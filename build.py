@@ -5,10 +5,10 @@ BASE = 'https://travel.pronetservicesvn.com'
 NB = ' '
 # title comes from the page dictionary (meta.title); description and og:locale here
 SEO = {
- 'ru': ('Морские туры в Нячанге от местной команды: три острова и снорклинг, Тайная бухта Гань Няй, Хон Мун, Хон Там, VinWonders. Цены от 750' + NB + '000' + NB + '₫, офис в Нячанге.', 'ru_RU'),
- 'en': ('Nha Trang boat tours by a local team: island trips with snorkelling, Ganh Nhay Secret Cove, Hon Tam mud baths, VinWonders. From 750,000 ₫.', 'en_US'),
- 'fr': ('Excursions en mer à Nha Trang avec une équipe locale' + NB + ': îles et snorkeling, crique de Ganh Nhay, bains de boue de Hon Tam, VinWonders. Dès 750' + NB + '000' + NB + '₫.', 'fr_FR'),
- 'vi': ('Tour biển Nha Trang của đội ngũ địa phương: tour đảo lặn ngắm san hô, Gành Nhảy, tắm bùn Hòn Tằm, VinWonders. Giá từ 750.000đ.', 'vi_VN'),
+ 'ru': ('Морские туры в Нячанге от местной команды: три острова и снорклинг, Тайная бухта Гань Няй, Хон Мун, Хон Там, VinWonders. Цены от 640' + NB + '000' + NB + '₫, офис в Нячанге.', 'ru_RU'),
+ 'en': ('Nha Trang boat tours by a local team: island trips with snorkelling, Ganh Nhay Secret Cove, Hon Tam mud baths, VinWonders. From 640,000 ₫.', 'en_US'),
+ 'fr': ('Excursions en mer à Nha Trang avec une équipe locale' + NB + ': îles et snorkeling, crique de Ganh Nhay, bains de boue de Hon Tam, VinWonders. Dès 640' + NB + '000' + NB + '₫.', 'fr_FR'),
+ 'vi': ('Tour biển Nha Trang của đội ngũ địa phương: tour đảo lặn ngắm san hô, Gành Nhảy, tắm bùn Hòn Tằm, VinWonders. Giá từ 640.000đ.', 'vi_VN'),
 }
 SEO['x'] = SEO['en']
 
@@ -44,7 +44,7 @@ def jsonld(lang, url, d):
         'address': {'@type': 'PostalAddress', 'streetAddress': 'Lô 57, đường A3, KĐT VCN Phước Long 2', 'addressLocality': 'Nha Trang', 'addressRegion': 'Khánh Hòa', 'addressCountry': 'VN'},
         'geo': {'@type': 'GeoCoordinates', 'latitude': 12.2172849, 'longitude': 109.1821677},
         'hasMap': 'https://www.google.com/maps/place/C%C3%B4ng+ty+TNHH+Pronet+Services/@12.2172849,109.1821677,18z/data=!4m6!3m5!1s0x31705d0a87f86039:0x5287dd2b9c3a6234!8m2!3d12.2172849!4d109.1821677!16s%2Fg%2F11z87fyy1q',
-        'areaServed': 'Nha Trang, Khánh Hòa', 'currenciesAccepted': 'VND', 'priceRange': '750 000 – 9 500 000 VND',
+        'areaServed': 'Nha Trang, Khánh Hòa', 'currenciesAccepted': 'VND', 'priceRange': '640 000 – 9 500 000 VND',
         'sameAs': ['https://t.me/Boat_nhatrang', 'https://www.facebook.com/profile.php?id=61594450346439', 'https://zalo.me/84389935306']},
       {'@type': 'WebPage', '@id': url + '#page', 'url': url, 'name': d['meta.title'], 'description': SEO[lang][0], 'inLanguage': lang,
        'isPartOf': {'@type': 'WebSite', '@id': BASE + '/#site', 'url': BASE + '/', 'name': 'PRONET Travel', 'publisher': {'@id': org}},

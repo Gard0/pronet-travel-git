@@ -33,7 +33,7 @@ const BASE = process.argv[2] || 'http://localhost:8772';
     await p.evaluate(() => { location.hash = ''; scrollTo(0, document.getElementById('more').offsetTop); });
     await p.click('#more a.btn[data-tour="x2"]'); await p.waitForTimeout(300);
     await p.fill('#q-name', 'Test'); await p.fill('#q-contact', '@test'); await p.click('#q-form button[type=submit]'); await p.waitForTimeout(600);
-    ok(posted.some(x => /form-name=contact/.test(x) && /tour=H%C3%B2n%20T%E1%BA%B1m/.test(x)), `${tag} quick booking post ${posted.map(decodeURIComponent)}`);
+    ok(posted.some(x => /form-name=contact/.test(x) && /tour=Hon%20Tam%20all%20day/.test(x)), `${tag} quick booking post ${posted.map(decodeURIComponent)}`);
     ok(!errs.length, `${tag} errors ${errs}`);
     await ctx.close();
   }

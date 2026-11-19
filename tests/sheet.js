@@ -1,7 +1,7 @@
 // Checks the tour sheet on desktop and phone: every card opens, gallery, Back closes, deep link, booking hand-off.
 const { chromium, devices } = require('playwright');
 const BASE = process.argv[2] || 'http://localhost:8772';
-const IDS = ['sea', 'cove', 'honmun', 'x1', 'x2', 'x3', 'x4'];
+const IDS = ['sea', 'cove', 'honmun', 'x5', 'x6', 'x2', 'x1', 'x7', 'x3', 'x4'];
 (async () => {
   const b = await chromium.launch(); let fail = 0;
   const ok = (c, m) => { if (!c) { fail++; console.log('FAIL', m); } };
