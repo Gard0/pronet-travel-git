@@ -497,6 +497,24 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
     #det .ts-bar .btn{padding:12px 20px}
     #det .modal-x{top:calc(10px + env(safe-area-inset-top))}
   }
+  /* --- eSIM shop opened inside the page --- */
+  #esim-modal .es-card{max-width:960px;width:100%;height:min(90vh,900px);padding:0;display:flex;flex-direction:column;overflow:hidden}
+  #esim-modal .es-card:focus{outline:none}
+  .es-head{flex:none;display:flex;align-items:center;gap:14px;padding:12px 64px 12px 20px;border-bottom:1px solid var(--line);background:var(--paper);position:relative;min-height:60px}
+  .es-head b{font-size:17px;color:var(--navy)}
+  .es-head a{margin-left:auto;font-size:14px;font-weight:700;color:var(--sand-dark);border-bottom:2px solid var(--sand);white-space:nowrap}
+  #esim-modal .modal-x{top:10px;right:10px}
+  .es-body{flex:1;min-height:0;position:relative;background:#fff}
+  .es-body iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;display:block}
+  .es-wait{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:15px;padding:20px;text-align:center}
+  @media (max-width:600px){
+    #esim-modal{padding:0;align-items:stretch}
+    #esim-modal .es-card{max-width:none;height:100%;height:100dvh;border-radius:0;animation-name:sheet}
+    .es-head{padding:calc(10px + env(safe-area-inset-top)) 60px 10px 16px}
+    .es-head b{font-size:15px;white-space:nowrap}
+    .es-head a{font-size:13px}
+    #esim-modal .modal-x{top:calc(8px + env(safe-area-inset-top))}
+  }
   /* --- third tour --- */
   .hm-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:18px}
   .hm-chips .when{margin:0}
@@ -1228,6 +1246,17 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
   <button type="button" class="btn btn-sand btn-shine" data-quick="" tabindex="-1" data-i18n="nav.book">Забронировать</button>
 </div>
 
+<div class="modal" id="esim-modal" hidden>
+  <div class="modal-bg" data-eclose></div>
+  <div class="modal-card es-card" role="dialog" aria-modal="true" aria-labelledby="es-title" tabindex="-1">
+    <div class="es-head">
+      <b id="es-title" data-i18n="esim.title">eSIM для Вьетнама</b>
+      <a id="es-open" href="https://pronetservicesvn.com/esim" target="_blank" rel="noopener" data-i18n="esim.newtab">Открыть в новой вкладке</a>
+      <button type="button" class="modal-x" data-eclose aria-label="Close">×</button>
+    </div>
+    <div class="es-body" id="es-body"><div class="es-wait" id="es-wait" data-i18n="esim.loading">Загружаем магазин eSIM…</div></div>
+  </div>
+</div>
 <div class="modal" id="det" hidden>
   <div class="modal-bg" data-dclose></div>
   <div class="modal-card ts-card" role="dialog" aria-modal="true" aria-labelledby="d-title" tabindex="-1">
@@ -1376,6 +1405,7 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
       "tours.kicker": "Выберите тур",
       "tours.title": "Три тура — выберите свой день",
       "tours.lead": "Цена, время и место сбора сразу на карточке. Нажмите «Забронировать», и мы свяжемся с вами.",
+      "esim.newtab": "Открыть в новой вкладке", "esim.loading": "Загружаем магазин eSIM…", "esim.slow": "Магазин не открылся внутри страницы. Откройте его в новой вкладке.",
       "esim.title": "eSIM для Вьетнама", "esim.text": "Мобильный интернет сразу после прилёта: QR-код на почту, ваш номер остаётся. Пакеты Viettel и Mobifone от 185 000 ₫.", "esim.btn": "Выбрать eSIM",
       "det.full": "Полная программа на странице", "det.prev": "Предыдущее фото", "det.next": "Следующее фото", "det.close": "Закрыть", "det.photo": "Фото",
       "det.more": "Подробнее", "det.prog": "Программа", "det.incl": "Входит в стоимость", "det.extra": "Оплачивается отдельно", "det.note": "Важно знать", "det.approx": "Время примерное.",
@@ -1578,6 +1608,7 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
       "tours.kicker": "Choose your tour",
       "tours.title": "Three tours — pick your day",
       "tours.lead": "Price, timing and meeting point right on each card. Tap “Book” and we will get back to you.",
+      "esim.newtab": "Open in a new tab", "esim.loading": "Loading the eSIM shop…", "esim.slow": "The shop did not open inside this page. Open it in a new tab.",
       "esim.title": "eSIM for Vietnam", "esim.text": "Mobile data as soon as you land: QR code by email, keep your own number. Viettel and Mobifone plans from 185,000 ₫.", "esim.btn": "Choose an eSIM",
       "det.full": "Full programme on the page", "det.prev": "Previous photo", "det.next": "Next photo", "det.close": "Close", "det.photo": "Photo",
       "det.more": "Details", "det.prog": "Programme", "det.incl": "Included", "det.extra": "Not included", "det.note": "Good to know", "det.approx": "Times are approximate.",
@@ -1808,6 +1839,7 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
       "tours.kicker": "Choisissez votre excursion",
       "tours.title": "Trois excursions, choisissez votre journée",
       "tours.lead": "Prix, horaires et point de rendez-vous sur chaque carte. Touchez « Réserver » et nous vous recontactons.",
+      "esim.newtab": "Ouvrir dans un nouvel onglet", "esim.loading": "Chargement de la boutique eSIM…", "esim.slow": "La boutique ne s'est pas ouverte dans la page. Ouvrez-la dans un nouvel onglet.",
       "esim.title": "eSIM pour le Vietnam", "esim.text": "Internet mobile dès l'arrivée : QR code par e-mail, vous gardez votre numéro. Forfaits Viettel et Mobifone dès 185 000 ₫.", "esim.btn": "Choisir une eSIM",
       "det.full": "Programme complet sur la page", "det.prev": "Photo précédente", "det.next": "Photo suivante", "det.close": "Fermer", "det.photo": "Photo",
       "det.more": "Détails", "det.prog": "Programme", "det.incl": "Inclus", "det.extra": "Non inclus", "det.note": "Bon à savoir", "det.approx": "Horaires indicatifs.",
@@ -2014,6 +2046,7 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
       "tours.kicker": "Chọn tour",
       "tours.title": "Ba tour — chọn ngày của bạn",
       "tours.lead": "Giá, thời gian và điểm hẹn có ngay trên thẻ. Bấm “Đặt chỗ”, chúng tôi sẽ liên hệ bạn.",
+      "esim.newtab": "Mở trong tab mới", "esim.loading": "Đang tải cửa hàng eSIM…", "esim.slow": "Cửa hàng chưa mở được trong trang. Hãy mở trong tab mới.",
       "esim.title": "eSIM cho Việt Nam", "esim.text": "Có mạng ngay khi đến nơi: mã QR gửi qua email, giữ nguyên số điện thoại. Gói Viettel, Mobifone từ 185.000 ₫.", "esim.btn": "Chọn eSIM",
       "det.full": "Xem lịch trình đầy đủ", "det.prev": "Ảnh trước", "det.next": "Ảnh tiếp", "det.close": "Đóng", "det.photo": "Ảnh",
       "det.more": "Chi tiết", "det.prog": "Lịch trình", "det.incl": "Giá bao gồm", "det.extra": "Không bao gồm", "det.note": "Lưu ý", "det.approx": "Thời gian chỉ mang tính tham khảo.",
@@ -2400,6 +2433,8 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
   var bar = $("#top-bar"), burger = $("#burger"), menu = $("#menu");
   function onScroll() { bar.classList.toggle("solid", window.scrollY > 40); }
   window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+  function closeMenu() { menu.classList.remove("open"); bar.classList.remove("open"); burger.setAttribute("aria-expanded", "false"); }
+  document.addEventListener("click", function (e) { if (menu.classList.contains("open") && !bar.contains(e.target) && !menu.contains(e.target)) closeMenu(); });
   burger.addEventListener("click", function () {
     var open = !menu.classList.contains("open");
     menu.classList.toggle("open", open);
@@ -2432,6 +2467,7 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
   // ---- quick booking modal: every "book" button opens it; the full form stays as a fallback ----
   var modal = $("#quick"), qForm = $("#q-form"), qMsg = $("#q-msg"), lastFocus = null, sentOnce = false;
   function openQuick(tour) {
+    closeMenu();
     $$(".chip-x", qForm).forEach(function (c) { c.hidden = !(tour && c.querySelector("input").value === tour); });
     if (/^(sea|cove|honmun|x\d)$/.test(tour || "")) { var r = qForm.querySelector('input[value="' + tour + '"]'); if (r) r.checked = true; }
     lastFocus = document.activeElement;
@@ -2531,7 +2567,7 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
   }
   function openDet(id, opener, fromHash) {
     if (!TS[id]) return;
-    dCur = id; dLast = opener || null;
+    dCur = id; dLast = opener || null; closeMenu();
     renderDet();
     try { if ("scrollRestoration" in history) history.scrollRestoration = "manual"; } catch (e) {}   // we put the page back ourselves
     if (!fromHash) { try { history.pushState({ ts: id }, "", "#tour-" + id); dPushed = true; } catch (e) { dPushed = false; } }
@@ -2557,6 +2593,46 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
     if (m && TS[m[1]]) { if (dm.hidden || dCur !== m[1]) openDet(m[1], null, true); dPushed = true; return; }
     dPushed = false; hideDet();
   });
+  // ---- eSIM shop (our own site) inside the page; the link still opens a new tab with Ctrl/Cmd-click ----
+  var em = $("#esim-modal"), eLast = null, ePushed = false, eTimer = null;
+  function esimUrl() { return "https://pronetservicesvn.com/" + (lang === "vi" ? "vi/" : "") + "esim"; }
+  function openEsim(opener, fromHash) {
+    eLast = opener || null; closeMenu();
+    var body = $("#es-body"), f = body.querySelector("iframe"), url = esimUrl();
+    $("#es-open").setAttribute("href", url);
+    if (!f || f.getAttribute("data-url") !== url) {
+      if (f) f.remove();
+      $("#es-wait").hidden = false; $("#es-wait").textContent = tx("esim.loading");
+      f = document.createElement("iframe"); f.src = url; f.setAttribute("data-url", url); f.title = tx("esim.title");
+      f.setAttribute("allow", "clipboard-write; payment"); f.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+      f.addEventListener("load", function () { clearTimeout(eTimer); $("#es-wait").hidden = true; });
+      clearTimeout(eTimer); eTimer = setTimeout(function () { $("#es-wait").textContent = tx("esim.slow"); }, 12000);
+      body.appendChild(f);
+    }
+    try { if ("scrollRestoration" in history) history.scrollRestoration = "manual"; } catch (e) {}
+    if (!fromHash) { try { history.pushState({ esim: 1 }, "", "#esim"); ePushed = true; } catch (e) { ePushed = false; } }
+    em.hidden = false; lockScroll(true); updateSticky();
+    setTimeout(function () { try { em.querySelector(".es-card").focus({ preventScroll: true }); } catch (e) {} }, 30);
+    track("open_esim", {});
+  }
+  function hideEsim() {
+    if (em.hidden) return;
+    em.hidden = true; lockScroll(false); updateSticky();
+    var y = dScrollY; requestAnimationFrame(function () { if (Math.abs(window.scrollY - y) > 2) window.scrollTo(0, y); try { history.scrollRestoration = "auto"; } catch (e) {} });
+    if (eLast && eLast.focus) try { eLast.focus({ preventScroll: true }); } catch (e) {}
+  }
+  function closeEsim() {
+    if (ePushed) { ePushed = false; history.back(); return; }
+    try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
+    hideEsim();
+  }
+  $("#esim-link").addEventListener("click", function (e) {
+    if (e.ctrlKey || e.metaKey || e.shiftKey || e.button === 1) return;   // the person asked for a new tab
+    e.preventDefault(); openEsim(this);
+  });
+  $$("[data-eclose]", em).forEach(function (b) { b.addEventListener("click", closeEsim); });
+  document.addEventListener("keydown", function (e) { if (!em.hidden && e.key === "Escape") { e.preventDefault(); closeEsim(); } });
+  window.addEventListener("popstate", function () { if (location.hash === "#esim") { if (em.hidden) openEsim(null, true); ePushed = true; } else { ePushed = false; hideEsim(); } });
   $$("[data-det]").forEach(function (bt) {
     bt.addEventListener("click", function (e) { e.preventDefault(); openDet(bt.getAttribute("data-det"), bt); });
   });
@@ -2696,7 +2772,7 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
       moving = true; clearTimeout(idleTimer);
       idleTimer = setTimeout(function () { moving = false; updateSticky(); }, 350);
     }
-    var show = window.scrollY > heroLimit && !nearForm && modal.hidden && dm.hidden && !(isIOS && moving);
+    var show = window.scrollY > heroLimit && !nearForm && modal.hidden && dm.hidden && em.hidden && !(isIOS && moving);
     sticky.classList.toggle("show", show);
     sticky.setAttribute("aria-hidden", String(!show));
     var b = sticky.querySelector("button"); if (b) b.tabIndex = show ? 0 : -1;
@@ -2776,6 +2852,7 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
   }
   var hashTour = /^#tour-([a-z0-9]+)$/.exec(location.hash);
   if (hashTour && TS[hashTour[1]]) openDet(hashTour[1], null, true);
+  else if (location.hash === "#esim") openEsim(null, true);
   else if (location.hash) {
     requestAnimationFrame(toHash);
     window.addEventListener("load", function () { setTimeout(toHash, 60); });
