@@ -108,6 +108,7 @@ def page(lang, key, url):
         return tag.replace(' sizes=', ' srcset="%s" sizes=' % ss, 1) if ss else tag
     body = re.sub(r'<img [^>]+>', add_srcset, body)
     script = script.replace('{}/*IMGW*/', json.dumps(WIDTHS, separators=(',', ':')))
+    if key == 'x': body = body.replace('href="tours/', 'href="/en/tours/')   # the English preview at / links to the English tour pages
     for b in ['ru', 'en', 'fr', 'vi']:   # pressed state of the language buttons
         body = body.replace('data-lang="%s" aria-pressed="%s"' % (b, 'true' if b == 'ru' else 'false'),
                             'data-lang="%s" aria-pressed="%s"' % (b, 'true' if b == lang else 'false'))
@@ -141,11 +142,27 @@ open(OUT + '/index.html', 'w', encoding='utf-8').write(page('en', 'x', BASE + '/
 for l in ['ru', 'en', 'fr', 'vi']:
     os.makedirs('%s/%s' % (OUT, l))
     open('%s/%s/index.html' % (OUT, l), 'w', encoding='utf-8').write(page(l, l, '%s/%s/' % (BASE, l)))
+# one page per tour and language: /<lang>/tours/<slug>/
+import tourpages
+TDATA = tourpages.load(src)
+CTX = {'BASE': BASE, 'logo': LOGO, 'srcset': srcset,
+       'css': re.search(r'<style>(.*?)</style>', src, re.S).group(1),
+       'gtm': src[src.index('<!-- Google Tag Manager'):src.index('<!-- End Google Tag Manager -->') + len('<!-- End Google Tag Manager -->')],
+       'fonts': lambda l: '\n'.join('<link rel="preload" as="font" type="font/woff2" href="/fonts/manrope-%s.woff2" crossorigin>' % f for f in ['latin'] + {'ru': ['cyrillic'], 'vi': ['vietnamese']}.get(l, []))}
+TOUR_URLS = []
+for tid, slug in tourpages.SLUG.items():
+    for l in ['ru', 'en', 'fr', 'vi']:
+        os.makedirs('%s/%s/tours/%s' % (OUT, l, slug), exist_ok=True)
+        open('%s/%s/tours/%s/index.html' % (OUT, l, slug), 'w', encoding='utf-8').write(tourpages.page(tid, l, D[l], TDATA, CTX))
+    TOUR_URLS.append(slug)
 # sitemap with language alternates, robots.txt
 import datetime
 today = datetime.date.today().isoformat()
 alts = ''.join('<xhtml:link rel="alternate" hreflang="%s" href="%s/%s/"/>' % (l, BASE, l) for l in ['ru', 'en', 'fr', 'vi']) + '<xhtml:link rel="alternate" hreflang="x-default" href="%s/"/>' % BASE
 urls = ''.join('<url><loc>%s</loc><lastmod>%s</lastmod>%s</url>' % (u, today, alts) for u in [BASE + '/'] + ['%s/%s/' % (BASE, l) for l in ['ru', 'en', 'fr', 'vi']])
+for slug in TOUR_URLS:
+    talts = ''.join('<xhtml:link rel="alternate" hreflang="%s" href="%s/%s/tours/%s/"/>' % (l, BASE, l, slug) for l in ['ru', 'en', 'fr', 'vi']) + '<xhtml:link rel="alternate" hreflang="x-default" href="%s/en/tours/%s/"/>' % (BASE, slug)
+    urls += ''.join('<url><loc>%s/%s/tours/%s/</loc><lastmod>%s</lastmod>%s</url>' % (BASE, l, slug, today, talts) for l in ['ru', 'en', 'fr', 'vi'])
 open(OUT + '/sitemap.xml', 'w', encoding='utf-8').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">%s</urlset>\n' % urls)
 open(OUT + '/robots.txt', 'w').write('User-agent: *\nAllow: /\n\nSitemap: %s/sitemap.xml\n' % BASE)
 # drop files no page refers to (unused photos, JPEG originals already served as WebP)

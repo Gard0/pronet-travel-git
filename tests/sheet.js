@@ -12,7 +12,7 @@ const IDS = ['sea', 'cove', 'honmun', 'x5', 'x6', 'x2', 'x1', 'x7', 'x3', 'x4'];
     await p.goto(BASE + '/ru/', { waitUntil: 'domcontentloaded' }); await p.waitForTimeout(500);
     for (const id of IDS) {
       const y0 = await p.evaluate(() => scrollY);
-      const btn = await p.$(`button[data-det="${id}"], a.btn[data-det="${id}"]`);
+      const btn = await p.$(`a.btn[data-det="${id}"], a.btn[data-det="${id}"]`);
       await btn.scrollIntoViewIfNeeded(); await p.waitForTimeout(150);
       const yBefore = await p.evaluate(() => scrollY);
       await btn.click(); await p.waitForTimeout(450);
@@ -36,10 +36,10 @@ const IDS = ['sea', 'cove', 'honmun', 'x5', 'x6', 'x2', 'x1', 'x7', 'x3', 'x4'];
       ok(Math.abs(after.y - yBefore) < 4, `${name} ${id} scroll kept ${yBefore}->${after.y}`);
     }
     // X button, ESC, booking hand-off
-    await p.click('button[data-det="x2"]'); await p.waitForTimeout(300);
+    await p.click('a.btn[data-det="x2"]'); await p.waitForTimeout(300);
     await p.click('#det .modal-x'); await p.waitForTimeout(300);
     ok(await p.$eval('#det', e => e.hidden), `${name} X closes`);
-    await p.click('button[data-det="x3"]'); await p.waitForTimeout(300);
+    await p.click('a.btn[data-det="x3"]'); await p.waitForTimeout(300);
     await p.click('#d-book'); await p.waitForTimeout(500);
     const q = await p.evaluate(() => ({ det: document.getElementById('det').hidden, quick: !document.getElementById('quick').hidden, tour: (document.querySelector('#q-form input[name=q-tour]:checked') || {}).value, hash: location.hash }));
     ok(q.det && q.quick && q.tour === 'x3' && q.hash === '', `${name} book hand-off ${JSON.stringify(q)}`);
