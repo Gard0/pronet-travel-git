@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" preserveAspectRatio="xMidYMid slice">
+<defs>
+<linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2d2a4a"/><stop offset=".6" stop-color="#8a5a6a"/><stop offset="1" stop-color="#e8a86a"/></linearGradient>
+<linearGradient id="se" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a5f78"/><stop offset="1" stop-color="#1d3346"/></linearGradient>
+</defs>
+<rect width="640" height="300" fill="url(#sk)"/>
+<g fill="#f3d496"><circle cx="90" cy="50" r="2"/><circle cx="180" cy="30" r="1.6"/><circle cx="300" cy="22" r="1.8"/><circle cx="560" cy="40" r="2"/><circle cx="610" cy="80" r="1.5"/><circle cx="40" cy="110" r="1.4"/></g>
+<g stroke="#f3d496" stroke-width="2.5" stroke-linecap="round"><path d="M520 70 l0 -20 M520 70 l14 -14 M520 70 l20 0 M520 70 l14 14 M520 70 l0 20 M520 70 l-14 14 M520 70 l-20 0 M520 70 l-14 -14"/></g>
+<g stroke="#e07a4f" stroke-width="2.5" stroke-linecap="round"><path d="M410 45 l0 -14 M410 45 l10 -10 M410 45 l14 0 M410 45 l10 10 M410 45 l0 14 M410 45 l-10 10 M410 45 l-14 0 M410 45 l-10 -10"/></g>
+<path d="M0 205 Q90 150 190 190 Q280 140 380 195 L380 215 L0 215Z" fill="#3f4f4a"/>
+<g transform="translate(250 125)" fill="none" stroke="#fdf9f1" stroke-width="3">
+<circle r="72"/><circle r="8" fill="#fdf9f1"/>
+<path d="M0 -72 V72 M-72 0 H72 M-51 -51 L51 51 M51 -51 L-51 51" stroke-width="1.6" opacity=".8"/></g>
+<g fill="#f3d496"><circle cx="250" cy="53" r="7"/><circle cx="322" cy="125" r="7"/><circle cx="250" cy="197" r="7"/><circle cx="178" cy="125" r="7"/><circle cx="301" cy="74" r="7"/><circle cx="301" cy="176" r="7"/><circle cx="199" cy="176" r="7"/><circle cx="199" cy="74" r="7"/></g>
+<path d="M225 210 L250 130 L275 210" stroke="#fdf9f1" stroke-width="4" fill="none"/>
+<path d="M360 210 C390 90 430 90 455 160 C475 215 500 120 530 120 C560 120 575 180 640 160" stroke="#e07a4f" stroke-width="5" fill="none"/>
+<g stroke="#e07a4f" stroke-width="2.5"><path d="M392 210 V135 M430 210 V105 M470 210 V185 M505 210 V140 M545 210 V125 M590 210 V165"/></g>
+<rect y="210" width="640" height="90" fill="url(#se)"/>
+<g stroke="#f3d496" stroke-width="3" stroke-linecap="round" opacity=".55"><path d="M210 232 h80 M230 250 h40 M440 240 h70 M60 260 h50"/></g>
+<path d="M90 245 h70 l-10 14 h-50Z" fill="#fdf9f1"/><path d="M105 245 v-12 h30 v12" fill="#b28842"/>
+</svg>
