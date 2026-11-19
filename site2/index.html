@@ -410,9 +410,11 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
   .tc-price small{color:var(--muted);font-size:13px;font-weight:600}
   .tc-btns{display:flex;gap:10px;margin-top:6px}
   .tc-btns .btn{flex:1;min-height:46px;padding:10px 14px;font-size:15px}
+  .more-card .tc-btns{flex-direction:column;gap:8px}
+  #more{scroll-margin-top:20px}
   /* --- more tours --- */
   .more{padding-top:0;text-align:center}
-  .more-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:34px;text-align:left}
+  .more-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:34px;text-align:left}
   .more-card .card-img{height:180px}
   .chip-x[hidden]{display:none!important}
   .more-card .card-body{padding:18px 20px 22px;gap:8px;flex:1}
@@ -423,8 +425,8 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
   .more-card .more-note{color:var(--muted);font-size:13px;line-height:1.45}
   .more-card .tc-price b{font-size:20px}
   .more-card .btn{min-height:44px;padding:10px 14px;font-size:15px;margin-top:4px}
-  @media (max-width:1100px){.more-grid{grid-template-columns:1fr 1fr}}
-  @media (max-width:600px){.more-grid{grid-template-columns:1fr;gap:14px}}
+  @media (max-width:1100px){.more-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (max-width:600px){.more-grid{grid-template-columns:1fr;gap:14px}.more-card .tc-btns{flex-direction:row}}
   .esim{display:flex;align-items:center;gap:18px;margin-top:26px;padding:18px 22px;background:var(--paper);border:1px solid var(--line);border-radius:18px;text-align:left;color:var(--navy);text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,.05)}
   .esim:hover{border-color:var(--sand)}
   .esim-ico{flex:none;width:48px;height:48px;border-radius:14px;background:var(--sand);color:var(--ink);display:flex;align-items:center;justify-content:center}
@@ -434,20 +436,61 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
   .esim-txt small{display:block;color:var(--muted);font-size:14px;line-height:1.45;margin-top:3px}
   .esim-btn{flex:none;min-height:44px;padding:10px 20px;font-size:15px}
   @media (max-width:600px){.esim{flex-wrap:wrap;padding:16px}.esim-btn{width:100%}}
-  #det .det-card{max-width:520px;padding:0 0 20px}
-  #det .det-card #d-img{display:block;width:100%;height:190px;object-fit:cover;border-radius:22px 22px 0 0}
-  #det .det-card h3,#det .det-card h4,#det .det-card p,#det .det-card ul,#det .det-card .d-price,#det .det-card .d-book{margin-left:22px;margin-right:22px}
-  #det .det-card h3{margin-top:18px}
-  #det .det-card h4{font-size:15px;margin-top:18px;margin-bottom:6px;color:var(--sand-dark);letter-spacing:.3px}
-  #det .det-card p{font-size:14.5px;line-height:1.55;margin-top:0;margin-bottom:0;color:var(--navy)}
-  #det .d-price{font-weight:700;color:var(--sand-dark)}
-  #det .d-price small{color:var(--muted);font-weight:600;margin-left:6px}
-  #det .d-prog{list-style:none;padding:0;margin-top:0;margin-bottom:0}
-  #det .d-prog li{display:flex;gap:12px;padding:6px 0;border-bottom:1px dashed var(--line);font-size:14.5px;line-height:1.45}
-  #det .d-prog b{flex:none;min-width:58px;color:var(--sand-dark)}
-  #det .det-card .d-approx{font-size:12.5px;color:var(--muted);margin-top:6px}
-  #det .det-card .d-book{display:flex;margin-top:20px;min-height:48px}
-  @media (max-width:600px){#det .det-card{padding:0 0 calc(18px + env(safe-area-inset-bottom))}.det-card #d-img{height:160px}}
+  /* --- tour sheet: one window per tour (gallery, facts, programme, included, sticky price + book) --- */
+  #det .ts-card{max-width:740px;padding:0;display:flex;flex-direction:column;overflow:hidden;max-height:min(92vh,980px)}
+  #det .ts-scroll{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+  .ts-gal{position:relative;background:#e9e1d1;aspect-ratio:16/9;max-height:52vh;width:100%}
+  .ts-track{display:flex;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;overscroll-behavior-x:contain}
+  .ts-track::-webkit-scrollbar{display:none}
+  .ts-track img{flex:0 0 100%;width:100%;height:100%;object-fit:cover;scroll-snap-align:start;scroll-snap-stop:always;display:block}
+  .ts-nav{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border:0;border-radius:50%;background:rgba(253,249,241,.92);color:var(--navy);font-size:24px;line-height:1;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center;-webkit-appearance:none;appearance:none}
+  .ts-nav.prev{left:12px}.ts-nav.next{right:12px}
+  .ts-nav[hidden]{display:none}
+  .ts-count{position:absolute;right:12px;bottom:12px;background:rgba(30,22,12,.62);color:#fff;font-size:12.5px;font-weight:700;border-radius:999px;padding:4px 10px;font-variant-numeric:tabular-nums}
+  .ts-tag{position:absolute;left:12px;bottom:12px;background:var(--sand);color:var(--ink);font-size:12px;font-weight:800;letter-spacing:.3px;border-radius:999px;padding:5px 11px}
+  .ts-body{padding:20px 24px 8px}
+  #det .ts-body h3{margin:0 0 10px;font-size:24px;line-height:1.25;letter-spacing:-.3px}
+  .ts-facts{list-style:none;margin:0 0 14px;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+  .ts-facts li{display:flex;align-items:center;gap:7px;background:var(--cream);border-radius:999px;padding:7px 12px;font-size:13.5px;font-weight:600;color:var(--navy);line-height:1.3}
+  .ts-facts svg{width:16px;height:16px;flex:none;color:var(--sand-dark)}
+  .ts-lead{font-size:15.5px;line-height:1.6;color:var(--navy);margin:0 0 4px}
+  #det .ts-body h4{font-size:13px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:var(--sand-dark);margin:22px 0 10px}
+  .ts-prog{list-style:none;margin:0;padding:0;position:relative}
+  .ts-prog li{position:relative;display:grid;grid-template-columns:96px 1fr;gap:12px;padding:0 0 14px;font-size:14.5px;line-height:1.45;color:var(--navy)}
+  .ts-prog li::before{content:"";position:absolute;left:100px;top:6px;width:8px;height:8px;border-radius:50%;background:var(--sand)}
+  .ts-prog li::after{content:"";position:absolute;left:103.5px;top:16px;bottom:0;width:1px;background:var(--line)}
+  .ts-prog li:last-child::after{display:none}
+  .ts-prog b{font-weight:700;color:var(--sand-dark);font-variant-numeric:tabular-nums}
+  .ts-prog span{padding-left:16px}
+  .ts-approx{font-size:12.5px;color:var(--muted);margin:2px 0 0}
+  .ts-cols{display:grid;grid-template-columns:1fr 1fr;gap:6px 22px}
+  .ts-list{list-style:none;margin:0;padding:0}
+  .ts-list li{position:relative;padding:3px 0 3px 24px;font-size:14.5px;line-height:1.45;color:var(--navy)}
+  .ts-list li::before{content:"";position:absolute;left:2px;top:8px;width:12px;height:7px;border-left:2px solid #4c9a62;border-bottom:2px solid #4c9a62;transform:rotate(-45deg)}
+  .ts-list.no li::before{left:4px;top:6px;width:10px;height:10px;border:0;transform:none;background:linear-gradient(45deg,transparent 43%,#b5543c 43%,#b5543c 57%,transparent 57%),linear-gradient(-45deg,transparent 43%,#b5543c 43%,#b5543c 57%,transparent 57%)}
+  .ts-note{font-size:14.5px;line-height:1.55;color:var(--navy);background:var(--cream);border-radius:14px;padding:12px 14px;margin:0}
+  .ts-more{display:inline-flex;margin:16px 0 6px;color:var(--sand-dark);font-weight:700;font-size:15px;border-bottom:2px solid var(--sand);padding-bottom:2px}
+  .ts-bar{flex:none;display:flex;align-items:center;gap:14px;padding:12px 24px;border-top:1px solid var(--line);background:var(--paper)}
+  .ts-price{flex:1;min-width:0;line-height:1.2}
+  .ts-price b{display:block;font-size:21px;color:var(--sand-dark);font-variant-numeric:tabular-nums}
+  .ts-price small{display:block;font-size:12.5px;color:var(--muted);font-weight:600;margin-top:2px}
+  #det .ts-bar .btn{flex:none;min-height:48px;padding:12px 26px}
+  #det .ts-card:focus{outline:none}
+  #det .modal-x{z-index:3;background:rgba(253,249,241,.92);box-shadow:0 4px 14px rgba(0,0,0,.18)}
+  @media (max-width:600px){
+    #det{padding:0;align-items:stretch}
+    #det .ts-card{max-width:none;max-height:none;height:100%;height:100dvh;border-radius:0;animation-name:sheet}
+    .ts-gal{aspect-ratio:4/3}
+    .ts-nav{display:none}
+    .ts-body{padding:18px 18px 6px}
+    #det .ts-body h3{font-size:21px}
+    .ts-prog li{grid-template-columns:78px 1fr}
+    .ts-prog li::before{left:82px}.ts-prog li::after{left:85.5px}
+    .ts-cols{grid-template-columns:1fr}
+    .ts-bar{padding:10px 18px calc(10px + env(safe-area-inset-bottom))}
+    #det .ts-bar .btn{padding:12px 20px}
+    #det .modal-x{top:calc(10px + env(safe-area-inset-top))}
+  }
   /* --- third tour --- */
   .hm-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:18px}
   .hm-chips .when{margin:0}
@@ -671,8 +714,8 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
     </ul>
     <div class="dirs tours3">
       <article class="card tour-card">
-        <a class="card-img" href="#sea" aria-label="">
-          <img src="/img/sea-card-cliffs3.jpg" alt="" loading="lazy" decoding="async">
+        <a class="card-img" href="#sea" data-det="sea" aria-label="">
+          <img src="/img/sea-card-cliffs3.jpg" alt="" sizes="(max-width: 700px) 92vw, (max-width: 1100px) 46vw, 380px" loading="lazy" decoding="async">
           <span class="tag" data-i18n="dirs.c1.tag">Морской тур</span>
         </a>
         <div class="card-body">
@@ -683,14 +726,14 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
           <div class="tc-price"><b data-i18n="hero.price2">900 000 VND</b><small data-i18n="tc.pp">за человека</small></div>
           <div class="tc-btns">
             <a href="#contact" class="btn btn-sand btn-shine" data-tour="sea" data-i18n="nav.book">Забронировать</a>
-            <a href="#sea" class="btn btn-ghost" data-i18n="dirs.c1.btn">Подробнее</a>
+            <a href="#sea" class="btn btn-ghost" data-det="sea" data-i18n="dirs.c1.btn">Подробнее</a>
           </div>
         </div>
       </article>
 
       <article class="card tour-card">
-        <a class="card-img" href="#cove" aria-label="">
-          <img src="/img/wild-4.jpg" alt="" loading="lazy" decoding="async">
+        <a class="card-img" href="#cove" data-det="cove" aria-label="">
+          <img src="/img/wild-4.jpg" alt="" sizes="(max-width: 700px) 92vw, (max-width: 1100px) 46vw, 380px" loading="lazy" decoding="async">
           <span class="tag" data-i18n="dirs.c2.tag">Тайная бухта</span>
         </a>
         <div class="card-body">
@@ -701,14 +744,14 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
           <div class="tc-price"><b data-i18n="doclet.price.short">1 050 000 VND</b><small data-i18n="tc.pp">за человека</small></div>
           <div class="tc-btns">
             <a href="#contact" class="btn btn-sand btn-shine" data-tour="cove" data-i18n="nav.book">Забронировать</a>
-            <a href="#cove" class="btn btn-ghost" data-i18n="dirs.c1.btn">Подробнее</a>
+            <a href="#cove" class="btn btn-ghost" data-det="cove" data-i18n="dirs.c1.btn">Подробнее</a>
           </div>
         </div>
       </article>
 
       <article class="card tour-card">
-        <a class="card-img" href="#honmun" aria-label="">
-          <img src="/img/hm-card.jpg" alt="Hon Mun" loading="lazy" decoding="async">
+        <a class="card-img" href="#honmun" data-det="honmun" aria-label="">
+          <img src="/img/hm-card.jpg" alt="Hon Mun" sizes="(max-width: 700px) 92vw, (max-width: 1100px) 46vw, 380px" loading="lazy" decoding="async">
           <span class="tag" data-i18n="dirs.c3.tag">Скоростной катер</span>
         </a>
         <div class="card-body">
@@ -719,7 +762,7 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
           <div class="tc-price"><b data-i18n="hero.price2">900 000 VND</b><small data-i18n="tc3.pp">взрослый · детский 630 000 ₫</small></div>
           <div class="tc-btns">
             <a href="#contact" class="btn btn-sand btn-shine" data-tour="honmun" data-i18n="nav.book">Забронировать</a>
-            <a href="#honmun" class="btn btn-ghost" data-i18n="dirs.c1.btn">Подробнее</a>
+            <a href="#honmun" class="btn btn-ghost" data-det="honmun" data-i18n="dirs.c1.btn">Подробнее</a>
           </div>
         </div>
       </article>
@@ -733,8 +776,8 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
     <p class="sub" data-i18n="more.lead">Однодневные поездки и тур в Таиланд. Даты, трансфер и условия для детей уточним при бронировании.</p>
     <div class="more-grid">
       <article class="card tour-card more-card">
-        <a class="card-img" href="#contact" data-tour="x1" tabindex="-1" aria-hidden="true">
-          <img src="/img/more-3islands.jpg" alt="Bai Tranh" loading="lazy" decoding="async">
+        <a class="card-img" href="#more" data-det="x1" tabindex="-1" aria-hidden="true">
+          <img src="/img/more-3islands.jpg" alt="Bai Tranh" sizes="(max-width: 600px) 92vw, (max-width: 1100px) 46vw, 290px" loading="lazy" decoding="async">
           <span class="tag" data-i18n="x1.tag">Острова</span>
         </a>
         <div class="card-body">
@@ -750,8 +793,8 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
         </div>
       </article>
       <article class="card tour-card more-card">
-        <a class="card-img" href="#contact" data-tour="x2" tabindex="-1" aria-hidden="true">
-          <img src="/img/more-hontam.svg" alt="" loading="lazy" decoding="async">
+        <a class="card-img" href="#more" data-det="x2" tabindex="-1" aria-hidden="true">
+          <img src="/img/more-hontam.svg" alt="" sizes="(max-width: 600px) 92vw, (max-width: 1100px) 46vw, 290px" loading="lazy" decoding="async">
           <span class="tag" data-i18n="x2.tag">Отдых</span>
         </a>
         <div class="card-body">
@@ -767,8 +810,8 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
         </div>
       </article>
       <article class="card tour-card more-card">
-        <a class="card-img" href="#contact" data-tour="x3" tabindex="-1" aria-hidden="true">
-          <img src="/img/more-vinwonders.svg" alt="" loading="lazy" decoding="async">
+        <a class="card-img" href="#more" data-det="x3" tabindex="-1" aria-hidden="true">
+          <img src="/img/more-vinwonders.svg" alt="" sizes="(max-width: 600px) 92vw, (max-width: 1100px) 46vw, 290px" loading="lazy" decoding="async">
           <span class="tag" data-i18n="x3.tag">Парк развлечений</span>
         </a>
         <div class="card-body">
@@ -784,8 +827,8 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
         </div>
       </article>
       <article class="card tour-card more-card">
-        <a class="card-img" href="#contact" data-tour="x4" tabindex="-1" aria-hidden="true">
-          <img src="/img/more-thailand.svg" alt="" loading="lazy" decoding="async">
+        <a class="card-img" href="#more" data-det="x4" tabindex="-1" aria-hidden="true">
+          <img src="/img/more-thailand.svg" alt="" sizes="(max-width: 600px) 92vw, (max-width: 1100px) 46vw, 290px" loading="lazy" decoding="async">
           <span class="tag" data-i18n="x4.tag">4 дня / 3 ночи</span>
         </a>
         <div class="card-body">
@@ -1127,18 +1170,36 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
 
 <div class="modal" id="det" hidden>
   <div class="modal-bg" data-dclose></div>
-  <div class="modal-card det-card" role="dialog" aria-modal="true" aria-labelledby="d-title">
+  <div class="modal-card ts-card" role="dialog" aria-modal="true" aria-labelledby="d-title" tabindex="-1">
     <button type="button" class="modal-x" data-dclose aria-label="Close">×</button>
-    <img id="d-img" alt="" decoding="async">
-    <h3 id="d-title"></h3>
-    <div class="d-price" id="d-price"></div>
-    <h4 data-i18n="det.prog">Программа</h4>
-    <ul class="d-prog" id="d-prog"></ul>
-    <p class="d-approx" id="d-approx"></p>
-    <h4 data-i18n="det.incl">Входит в стоимость</h4><p id="d-incl"></p>
-    <h4 data-i18n="det.extra">Оплачивается отдельно</h4><p id="d-extra"></p>
-    <h4 data-i18n="det.note">Важно знать</h4><p id="d-note"></p>
-    <a href="#contact" class="btn btn-sand btn-shine d-book" id="d-book" data-i18n="nav.book">Забронировать</a>
+    <div class="ts-scroll" id="d-scroll">
+      <div class="ts-gal" id="d-gal">
+        <div class="ts-track" id="d-track" tabindex="-1"></div>
+        <button type="button" class="ts-nav prev" id="d-prev" aria-label="Previous photo">‹</button>
+        <button type="button" class="ts-nav next" id="d-next" aria-label="Next photo">›</button>
+        <span class="ts-tag" id="d-tag"></span>
+        <span class="ts-count" id="d-count"></span>
+      </div>
+      <div class="ts-body">
+        <h3 id="d-title"></h3>
+        <ul class="ts-facts" id="d-facts"></ul>
+        <p class="ts-lead" id="d-lead"></p>
+        <h4 data-i18n="det.prog">Программа</h4>
+        <ol class="ts-prog" id="d-prog"></ol>
+        <p class="ts-approx" id="d-approx"></p>
+        <div class="ts-cols">
+          <div><h4 data-i18n="det.incl">Входит в стоимость</h4><ul class="ts-list" id="d-incl"></ul></div>
+          <div id="d-extra-box"><h4 data-i18n="det.extra">Оплачивается отдельно</h4><ul class="ts-list no" id="d-extra"></ul></div>
+        </div>
+        <h4 data-i18n="det.note">Важно знать</h4>
+        <p class="ts-note" id="d-note"></p>
+        <a class="ts-more" id="d-more" href="#tours" data-i18n="det.full">Полная программа на странице</a>
+      </div>
+    </div>
+    <div class="ts-bar">
+      <div class="ts-price"><b id="d-price"></b><small id="d-pp"></small></div>
+      <a href="#contact" class="btn btn-sand btn-shine" id="d-book" data-i18n="nav.book">Забронировать</a>
+    </div>
   </div>
 </div>
 <div class="modal" id="quick" hidden>
@@ -1253,6 +1314,7 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
       "tours.title": "Три тура — выберите свой день",
       "tours.lead": "Цена, время и место сбора сразу на карточке. Нажмите «Забронировать», и мы свяжемся с вами.",
       "esim.title": "eSIM для Вьетнама", "esim.text": "Мобильный интернет сразу после прилёта: QR-код на почту, ваш номер остаётся. Пакеты Viettel и Mobifone от 185 000 ₫.", "esim.btn": "Выбрать eSIM",
+      "det.full": "Полная программа на странице", "det.prev": "Предыдущее фото", "det.next": "Следующее фото", "det.close": "Закрыть", "det.photo": "Фото",
       "det.more": "Подробнее", "det.prog": "Программа", "det.incl": "Входит в стоимость", "det.extra": "Оплачивается отдельно", "det.note": "Важно знать", "det.approx": "Время примерное.",
       "more.kicker": "Ещё туры",
       "more.title": "Ещё туры из Нячанга",
@@ -1430,6 +1492,7 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
       "tours.title": "Three tours — pick your day",
       "tours.lead": "Price, timing and meeting point right on each card. Tap “Book” and we will get back to you.",
       "esim.title": "eSIM for Vietnam", "esim.text": "Mobile data as soon as you land: QR code by email, keep your own number. Viettel and Mobifone plans from 185,000 ₫.", "esim.btn": "Choose an eSIM",
+      "det.full": "Full programme on the page", "det.prev": "Previous photo", "det.next": "Next photo", "det.close": "Close", "det.photo": "Photo",
       "det.more": "Details", "det.prog": "Programme", "det.incl": "Included", "det.extra": "Not included", "det.note": "Good to know", "det.approx": "Times are approximate.",
       "more.kicker": "More tours",
       "more.title": "More tours from Nha Trang",
@@ -1635,6 +1698,7 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
       "tours.title": "Trois excursions, choisissez votre journée",
       "tours.lead": "Prix, horaires et point de rendez-vous sur chaque carte. Touchez « Réserver » et nous vous recontactons.",
       "esim.title": "eSIM pour le Vietnam", "esim.text": "Internet mobile dès l'arrivée : QR code par e-mail, vous gardez votre numéro. Forfaits Viettel et Mobifone dès 185 000 ₫.", "esim.btn": "Choisir une eSIM",
+      "det.full": "Programme complet sur la page", "det.prev": "Photo précédente", "det.next": "Photo suivante", "det.close": "Fermer", "det.photo": "Photo",
       "det.more": "Détails", "det.prog": "Programme", "det.incl": "Inclus", "det.extra": "Non inclus", "det.note": "Bon à savoir", "det.approx": "Horaires indicatifs.",
       "more.kicker": "Autres excursions",
       "more.title": "Autres excursions depuis Nha Trang",
@@ -1816,6 +1880,7 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
       "tours.title": "Ba tour — chọn ngày của bạn",
       "tours.lead": "Giá, thời gian và điểm hẹn có ngay trên thẻ. Bấm “Đặt chỗ”, chúng tôi sẽ liên hệ bạn.",
       "esim.title": "eSIM cho Việt Nam", "esim.text": "Có mạng ngay khi đến nơi: mã QR gửi qua email, giữ nguyên số điện thoại. Gói Viettel, Mobifone từ 185.000 ₫.", "esim.btn": "Chọn eSIM",
+      "det.full": "Xem lịch trình đầy đủ", "det.prev": "Ảnh trước", "det.next": "Ảnh tiếp", "det.close": "Đóng", "det.photo": "Ảnh",
       "det.more": "Chi tiết", "det.prog": "Lịch trình", "det.incl": "Giá bao gồm", "det.extra": "Không bao gồm", "det.note": "Lưu ý", "det.approx": "Thời gian chỉ mang tính tham khảo.",
       "more.kicker": "Thêm tour",
       "more.title": "Thêm tour từ Nha Trang",
@@ -2134,7 +2199,7 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
       var items = s.items ? '<ul class="list" style="margin-top:14px">' + pick(s.items).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join("") + '</ul>' : '';
       var addr = s.addr ? '<div class="addr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><a href="https://www.google.com/maps/search/?api=1&query=56X2%2BMQ+Nha+Trang" target="_blank" rel="noopener" style="border-bottom:1px solid var(--sand)">' + esc(s.addr) + '</a></div>' : '';
       return '<article class="step' + (s.flip ? ' flip' : '') + '">' +
-        '<div class="step-img"><img src="' + s.img + '" alt="" loading="lazy" decoding="async"></div>' +
+        '<div class="step-img"><img src="' + s.img + '"' + ssAttr(s.img, "(max-width: 700px) 92vw, 560px") + ' alt="" loading="lazy" decoding="async"></div>' +
         '<div><div class="time">' + esc(s.time) + '</div>' + place +
         '<h4>' + esc(pick(s.title)) + '</h4><p>' + esc(pick(s.text)) + '</p>' + items + addr + '</div></article>';
     }).join("");
@@ -2145,8 +2210,8 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
     $("#hm-program").innerHTML = HM_PROGRAM.map(function (s, i) {
       var items = s.items ? '<ul class="list hm-menu">' + pick(s.items).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join("") + '</ul>' : '';
       return '<article class="step' + (i % 2 ? ' flip' : '') + '">' +
-        (s.tiles ? '<div class="step-img tiles">' + s.tiles.map(function (t) { return '<img src="' + t + '" alt="" loading="lazy" decoding="async">'; }).join("") + '</div>'
-                 : '<div class="step-img"><img src="' + s.img + '" alt="" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=\'' + s.fb + '\'"></div>') +
+        (s.tiles ? '<div class="step-img tiles">' + s.tiles.map(function (t) { return '<img src="' + t + '"' + ssAttr(t, "(max-width: 700px) 46vw, 270px") + ' alt="" loading="lazy" decoding="async">'; }).join("") + '</div>'
+                 : '<div class="step-img"><img src="' + s.img + '"' + ssAttr(s.img, "(max-width: 700px) 92vw, 560px") + ' alt="" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=\'' + s.fb + '\'"></div>') +
         '<div><div class="time">' + esc(s.time) + '</div><h4>' + esc(pick(s.title)) + '</h4><p>' + esc(pick(s.text)) + '</p>' + items + '</div></article>';
     }).join("");
     $("#reviews").innerHTML = REVIEWS.map(function (r) {
@@ -2224,28 +2289,127 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
   }
 
   var DET = {"x1": {"ru": {"prog": [["08:30", "Трансфер из отеля в центре Нячанга"], ["10:00", "Пляж Бай Транх: купание и отдых"], ["11:30", "Обед из морепродуктов в рыбацкой деревне"], ["12:30", "Коралловая бухта: купание, бассейн, фото"], ["15:30", "Возвращение в отель"]], "incl": "Трансфер из отеля и обратно, скоростной катер, обед, гид, входные билеты, шезлонги, страховка.", "extra": "Снорклинг и водные развлечения по желанию, личные расходы.", "note": "Сборная группа, гид говорит по-вьетнамски. Мы на связи на русском в Telegram и Zalo до поездки и во время неё. Дети ниже 1 м — бесплатно."}, "en": {"prog": [["08:30", "Pick-up from your hotel in central Nha Trang"], ["10:00", "Bai Tranh beach: swimming and relaxing"], ["11:30", "Seafood lunch in a fishing village"], ["12:30", "Coral Bay: swimming, pool and photos"], ["15:30", "Back at your hotel"]], "incl": "Hotel transfer both ways, speedboat, lunch, guide, entrance tickets, sunbeds, insurance.", "extra": "Snorkelling and optional water activities, personal expenses.", "note": "Shared group with a Vietnamese-speaking guide. We stay in touch in English on Telegram and Zalo before and during the trip. Children under 1 m go free."}, "fr": {"prog": [["08:30", "Prise en charge à votre hôtel au centre de Nha Trang"], ["10:00", "Plage de Bai Tranh : baignade et détente"], ["11:30", "Déjeuner de fruits de mer dans un village de pêcheurs"], ["12:30", "Baie de Corail : baignade, piscine et photos"], ["15:30", "Retour à l'hôtel"]], "incl": "Transfert hôtel aller-retour, bateau rapide, déjeuner, guide, entrées, transats, assurance.", "extra": "Snorkeling et activités nautiques en option, dépenses personnelles.", "note": "Groupe partagé avec un guide vietnamophone. Nous restons joignables en français sur Telegram et Zalo avant et pendant l'excursion. Gratuit pour les enfants de moins de 1 m."}, "vi": {"prog": [["08:30", "Đón khách tại khách sạn trung tâm Nha Trang"], ["10:00", "Bãi Tranh: tắm biển, nghỉ ngơi"], ["11:30", "Ăn trưa hải sản tại làng chài"], ["12:30", "Vịnh San Hô: tắm biển, hồ bơi, chụp ảnh"], ["15:30", "Về lại khách sạn"]], "incl": "Xe đưa đón khách sạn, cano cao tốc, ăn trưa, hướng dẫn viên, vé tham quan, ghế nằm, bảo hiểm.", "extra": "Lặn ngắm san hô và các trò chơi dưới nước tự chọn, chi phí cá nhân.", "note": "Tour ghép đoàn, hướng dẫn viên nói tiếng Việt. Trẻ em dưới 1 m miễn phí."}}, "x2": {"ru": {"prog": [["08:30", "Трансфер из отеля, переезд в порт"], ["09:00", "Остров Хон Там: грязевая ванна, гидромассаж, бассейн у моря"], ["12:00", "Обед в ресторане на острове"], ["15:30", "Катер обратно, трансфер в отель"]], "incl": "Трансфер, катер, грязевая ванна, бассейн, обед, гид, входные билеты, страховка. Полотенца и шкафчики бесплатно.", "extra": "Личные расходы.", "note": "День отдыха, а не активностей. Сборная группа, гид говорит по-вьетнамски, мы на связи на русском. Возьмите купальник, который не жалко испачкать. Дети ниже 1 м — бесплатно."}, "en": {"prog": [["08:30", "Hotel pick-up and transfer to the port"], ["09:00", "Hon Tam island: mud bath, hydro-massage, seaside pool"], ["12:00", "Lunch at the island restaurant"], ["15:30", "Boat back and transfer to your hotel"]], "incl": "Transfer, boat, mud bath, pool, lunch, guide, entrance tickets, insurance. Towels and lockers are free.", "extra": "Personal expenses.", "note": "A day to relax rather than an active one. Shared group with a Vietnamese-speaking guide; we stay in touch in English. Bring a swimsuit you don't mind getting muddy. Children under 1 m go free."}, "fr": {"prog": [["08:30", "Prise en charge à l'hôtel et transfert au port"], ["09:00", "Île de Hon Tam : bain de boue, hydromassage, piscine face à la mer"], ["12:00", "Déjeuner au restaurant de l'île"], ["15:30", "Retour en bateau et transfert à l'hôtel"]], "incl": "Transfert, bateau, bain de boue, piscine, déjeuner, guide, entrées, assurance. Serviettes et casiers gratuits.", "extra": "Dépenses personnelles.", "note": "Une journée de détente plutôt qu'active. Groupe partagé avec un guide vietnamophone ; nous restons joignables en français. Prévoyez un maillot qui peut se salir. Gratuit pour les enfants de moins de 1 m."}, "vi": {"prog": [["08:30", "Đón tại khách sạn, ra cảng"], ["09:00", "Đảo Hòn Tằm: tắm bùn, massage thủy liệu, hồ bơi bên biển"], ["12:00", "Ăn trưa tại nhà hàng trên đảo"], ["15:30", "Cano về đất liền, đưa về khách sạn"]], "incl": "Xe đưa đón, cano, tắm bùn, hồ bơi, ăn trưa, hướng dẫn viên, vé tham quan, bảo hiểm. Khăn tắm và tủ đồ miễn phí.", "extra": "Chi phí cá nhân.", "note": "Tour ghép đoàn, hướng dẫn viên nói tiếng Việt. Nên mang đồ bơi cũ để tắm bùn. Trẻ em dưới 1 m miễn phí."}}, "x3": {"ru": {"prog": [["08:00", "Трансфер из отеля, катер на остров"], ["09:00", "Зоопарк, сад, колесо обозрения, океанариум"], ["12:00", "Обед в ресторане парка"], ["13:30", "Аттракционы и игровые зоны"], ["15:00", "Аквапарк"], ["18:45", "Музыкальный фонтан"], ["19:15", "Вечернее шоу"], ["20:00", "Катер обратно, трансфер в отель"]], "incl": "Трансфер, катер, входной билет с безлимитом аттракционов, обед, вода, гид, страховка.", "extra": "Личные расходы.", "note": "Подходит семьям с детьми. Сборная группа, гид говорит по-вьетнамски, мы на связи на русском. Возьмите купальник для аквапарка. Расписание шоу может меняться. Дети ниже 1 м — бесплатно."}, "en": {"prog": [["08:00", "Hotel pick-up, boat to the island"], ["09:00", "Zoo, garden, Ferris wheel, aquarium"], ["12:00", "Lunch at a park restaurant"], ["13:30", "Rides and game zones"], ["15:00", "Water park"], ["18:45", "Musical fountain"], ["19:15", "Evening show"], ["20:00", "Boat back and transfer to your hotel"]], "incl": "Transfer, boat, park ticket with unlimited rides, lunch, water, guide, insurance.", "extra": "Personal expenses.", "note": "Great for families. Shared group with a Vietnamese-speaking guide; we stay in touch in English. Bring a swimsuit for the water park. Show times may change. Children under 1 m go free."}, "fr": {"prog": [["08:00", "Prise en charge à l'hôtel, bateau vers l'île"], ["09:00", "Zoo, jardin, grande roue, aquarium"], ["12:00", "Déjeuner dans un restaurant du parc"], ["13:30", "Manèges et zones de jeux"], ["15:00", "Parc aquatique"], ["18:45", "Fontaine musicale"], ["19:15", "Spectacle du soir"], ["20:00", "Retour en bateau et transfert à l'hôtel"]], "incl": "Transfert, bateau, billet du parc avec manèges illimités, déjeuner, eau, guide, assurance.", "extra": "Dépenses personnelles.", "note": "Idéal en famille. Groupe partagé avec un guide vietnamophone ; nous restons joignables en français. Prévoyez un maillot pour le parc aquatique. Horaires des spectacles sous réserve. Gratuit pour les enfants de moins de 1 m."}, "vi": {"prog": [["08:00", "Đón tại khách sạn, cano ra đảo"], ["09:00", "Vườn thú, vườn hoa, vòng quay, thủy cung"], ["12:00", "Ăn trưa tại nhà hàng trong công viên"], ["13:30", "Trò chơi cảm giác mạnh, khu vui chơi"], ["15:00", "Công viên nước"], ["18:45", "Nhạc nước"], ["19:15", "Show diễn buổi tối"], ["20:00", "Cano về, đưa về khách sạn"]], "incl": "Xe đưa đón, cano, vé vào cổng chơi không giới hạn, ăn trưa, nước uống, hướng dẫn viên, bảo hiểm.", "extra": "Chi phí cá nhân.", "note": "Phù hợp gia đình có trẻ nhỏ. Mang đồ bơi cho công viên nước. Lịch show có thể thay đổi. Trẻ em dưới 1 m miễn phí."}}, "x4": {"ru": {"prog": [["День 1", "Перелёт Камрань → Бангкок, храмы Эраван и Ват Ратчабопхит, ужин, отель"], ["День 2", "Храм Яннава, ювелирный центр, обед на 86-м этаже Байок Скай, круиз по реке Чаупхрайя, ICONSIAM"], ["День 3", "Свободный день или дополнительные экскурсии"], ["День 4", "Завтрак, перелёт в Камрань, трансфер"]], "incl": "Перелёт туда-обратно с багажом 20 кг, отель 3–4* (двухместный номер), трансферы, автобус по программе, питание по программе, входные билеты, гиды, страховка.", "extra": "Чаевые около 4 $ в день. Для иностранцев — виза для повторного въезда во Вьетнам. Личные расходы.", "note": "Группа от 20 человек, даты уточняем при бронировании. Гид говорит по-вьетнамски. Перед бронированием проверьте, что ваша виза позволяет выехать из Вьетнама и вернуться."}, "en": {"prog": [["Day 1", "Flight Cam Ranh → Bangkok, Erawan Shrine and Wat Ratchabophit, dinner, hotel"], ["Day 2", "Wat Yannawa, gem centre, lunch on the 86th floor of Baiyoke Sky, Chao Phraya river cruise, ICONSIAM"], ["Day 3", "Free day or optional tours"], ["Day 4", "Breakfast, flight to Cam Ranh, transfer"]], "incl": "Return flights with 20 kg baggage, 3–4* hotel (twin room), transfers, coach as per programme, meals as per programme, entrance tickets, guides, insurance.", "extra": "Tips of about $4 per day. For foreigners, a visa to re-enter Vietnam. Personal expenses.", "note": "Groups of 20+, dates confirmed at booking. Vietnamese-speaking guide. Before booking, make sure your visa allows you to leave Vietnam and come back."}, "fr": {"prog": [["Jour 1", "Vol Cam Ranh → Bangkok, sanctuaire d'Erawan et Wat Ratchabophit, dîner, hôtel"], ["Jour 2", "Wat Yannawa, centre de pierres précieuses, déjeuner au 86e étage du Baiyoke Sky, croisière sur la Chao Phraya, ICONSIAM"], ["Jour 3", "Journée libre ou excursions en option"], ["Jour 4", "Petit-déjeuner, vol vers Cam Ranh, transfert"]], "incl": "Vols aller-retour avec bagage de 20 kg, hôtel 3–4* (chambre double), transferts, autocar selon le programme, repas selon le programme, entrées, guides, assurance.", "extra": "Pourboires d'environ 4 $ par jour. Pour les étrangers, un visa pour revenir au Vietnam. Dépenses personnelles.", "note": "Groupes de 20 personnes minimum, dates confirmées à la réservation. Guide vietnamophone. Avant de réserver, vérifiez que votre visa permet de sortir du Vietnam et d'y revenir."}, "vi": {"prog": [["Ngày 1", "Bay Cam Ranh → Bangkok, đền Erawan và chùa Wat Ratchabophit, ăn tối, nhận phòng"], ["Ngày 2", "Chùa Yannawa, trung tâm đá quý, ăn trưa tầng 86 Baiyoke Sky, du thuyền sông Chao Phraya, ICONSIAM"], ["Ngày 3", "Tự do hoặc tham quan tự chọn"], ["Ngày 4", "Ăn sáng, bay về Cam Ranh, xe đưa đón"]], "incl": "Vé máy bay khứ hồi kèm 20 kg hành lý, khách sạn 3–4* (phòng đôi), đưa đón, xe theo chương trình, ăn theo chương trình, vé tham quan, hướng dẫn viên, bảo hiểm.", "extra": "Tiền tip khoảng 4 USD/ngày, chi phí cá nhân.", "note": "Đoàn từ 20 khách, ngày khởi hành xác nhận khi đặt tour. Hướng dẫn viên nói tiếng Việt."}}};
-  var dm = $("#det"), dCur = null, dLast = null;
-  function renderDet() {
-    if (!dCur) return; var d = (DET[dCur] || {})[lang] || DET[dCur].ru;
-    var card = document.querySelector('[data-det="' + dCur + '"]').closest("article");
-    $("#d-img").src = card.querySelector(".card-img img").getAttribute("src");
-    $("#d-title").textContent = tx(dCur + ".title");
-    $("#d-price").innerHTML = ""; var b = document.createElement("span"); b.textContent = tx(dCur + ".price"); var sm = document.createElement("small"); sm.textContent = tx(dCur + ".pp");
-    $("#d-price").appendChild(b); $("#d-price").appendChild(sm);
-    var ul = $("#d-prog"); ul.innerHTML = "";
-    d.prog.forEach(function (r) { var li = document.createElement("li"), t = document.createElement("b"), sp = document.createElement("span"); t.textContent = r[0]; sp.textContent = r[1]; li.appendChild(t); li.appendChild(sp); ul.appendChild(li); });
-    $("#d-approx").textContent = dCur === "x4" ? "" : tx("det.approx");
-    $("#d-incl").textContent = d.incl; $("#d-extra").textContent = d.extra; $("#d-note").textContent = d.note;
-    $("#d-book").setAttribute("data-tour", dCur);
+  // ---- tour sheet: one window per tour, shared by the 7 cards. Opens with #tour-<id>, closes with Back on phones ----
+  var IMGW = {}/*IMGW*/;
+  function ssAttr(p, sizes) { var ss = srcsetOf(p); return ss ? ' srcset="' + ss + '" sizes="' + sizes + '"' : ""; }   // widths of the WebP copies made by build.py, for srcset
+  function srcsetOf(p) {
+    var m = /\/img\/([A-Za-z0-9_.-]+)\.(webp|jpg)$/.exec(p), w = m && IMGW[m[1]];
+    if (!w) return "";
+    return w.map(function (x, i) { return "/img/" + m[1] + (i === w.length - 1 ? "" : "-" + x) + ".webp " + x + "w"; }).join(", ");
   }
-  function closeDet() { dm.hidden = true; document.documentElement.classList.remove("modal-open"); if (dLast && dLast.focus) try { dLast.focus({ preventScroll: true }); } catch (e) {} }
+  var TS = {
+    sea:    { img: ["/img/sea-card-cliffs3.jpg", "/img/sea-step-hontre.jpg", "/img/real-bay.jpg", "/img/sea-step-honmun.jpg", "/img/real-cliff-3.jpg", "/img/depart.jpg", "/img/sea-step-sup-vests.jpg", "/img/real-water.jpg"],
+              tag: "dirs.c1.tag", title: "dirs.c1.title", lead: "sea.banner.text", price: "hero.price2", pp: "inc.price.note", facts: ["tc1.time", "tc1.place"], more: "#sea" },
+    cove:   { img: ["/img/wild-5.jpg", "/img/wild-4.jpg", "/img/wild-beach-poster.jpg", "/img/wild-2.jpg", "/img/wild-3.jpg"],
+              tag: "dirs.c2.tag", title: "dirs.c2.title", lead: "doclet.lead", price: "doclet.price.short", pp: "tc.pp", facts: ["tc2.time", "tc2.place"], more: "#cove" },
+    honmun: { img: ["/img/hm-card.jpg", "/img/hm-honmun.jpg", "/img/hm-baitranh.jpg", "/img/hm-g3.jpg", "/img/hm-g4.jpg", "/img/hm-village-seafood.jpg"],
+              tag: "dirs.c3.tag", title: "dirs.c3.title", lead: "hm.lead", price: "hm.price.pp", pp: "hm.price.kid", facts: ["tc3.time", "tc3.place"], more: "#honmun" },
+    x1: { img: ["/img/more-3islands.jpg", "/img/hm-baitranh.jpg", "/img/tile-floating-village.jpg", "/img/hm-g4.jpg", "/img/hm-g3.jpg"], tag: "x1.tag", title: "x1.title", lead: "x1.text", price: "x1.price", pp: "x1.pp", facts: ["x1.time", "hm.pickup"] },
+    x2: { img: ["/img/more-hontam.svg"], tag: "x2.tag", title: "x2.title", lead: "x2.text", price: "x2.price", pp: "x2.pp", facts: ["x2.time", "hm.pickup"] },
+    x3: { img: ["/img/more-vinwonders.svg"], tag: "x3.tag", title: "x3.title", lead: "x3.text", price: "x3.price", pp: "x3.pp", facts: ["x3.time", "hm.pickup"] },
+    x4: { img: ["/img/more-thailand.svg"], tag: "x4.tag", title: "x4.title", lead: "x4.text", price: "x4.price", pp: "x4.pp", facts: ["x4.time"] }
+  };
+  function tsContent(id) {   // programme / included / not included / note for the current language
+    if (DET[id]) { var d = DET[id][lang] || DET[id].ru; return { prog: d.prog.map(function (r) { return [typo(r[0]), typo(r[1])]; }), incl: typo(d.incl).replace(/\.$/, "").split(/,\s*|\.\s+/), extra: typo(d.extra).replace(/\.$/, "").split(/,\s*|\.\s+/), note: typo(d.note), approx: id !== "x4" }; }
+    if (id === "sea") return { prog: PROGRAM.map(function (st) { return [st.time, pick(st.title)]; }), incl: pick(INCLUDED), extra: [], note: tx("note.text"), approx: true };
+    if (id === "cove") { var l = pick(DOCLET_LIST); return { prog: DOCLET_ROUTE.map(function (r) { var v = pick(r.s), m = /~?\d{1,2}[:h]\d{2}/.exec(v), rest = m ? v.replace(m[0], "").replace(/^[\s,]+|[\s,]+$/g, "") : v; return [m ? m[0] : "", pick(r.t) + (rest ? " · " + rest : "")]; }), incl: l[l.length - 1].replace(/^[^:]*:\s*/, "").split(/,\s*/), extra: [tx("promo.pickup")], note: tx("doclet.note"), approx: true }; }
+    return { prog: HM_PROGRAM.map(function (st) { return [st.time, pick(st.title)]; }), incl: pick(HM_INC), extra: [tx("hm.notinc").replace(/^[^:]*:\s*/, "")],
+             note: tx("hm.menu.note") + " " + tx("hm.kids.title") + ": " + tx("hm.kid1.h") + " — " + tx("hm.kid1.p") + "; " + tx("hm.kid2.h") + " — " + tx("hm.kid2.p") + "; " + tx("hm.kid3.h") + " — " + tx("hm.kid3.p") + ".", approx: true };
+  }
+  var dm = $("#det"), dCur = null, dLast = null, dPushed = false, dPendingBook = null, dScrollY = 0;
+  var ICO = { time: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+              pin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>' };
+  function li(list, items) { list.innerHTML = items.map(function (x) { return String(x || "").trim(); }).filter(Boolean).map(function (x) { return "<li>" + esc(x.charAt(0).toUpperCase() + x.slice(1)) + "</li>"; }).join(""); }
+  function renderDet(keepGallery) {
+    if (!dCur) return;
+    var t = TS[dCur], c = tsContent(dCur);
+    if (!keepGallery) {
+      $("#d-track").innerHTML = t.img.map(function (p, i) {
+        var ss = srcsetOf(p);
+        return '<img src="' + p + '"' + (ss ? ' srcset="' + ss + '" sizes="(max-width: 600px) 100vw, 740px"' : "") + ' alt="" width="1280" height="800" decoding="async"' + (i ? ' loading="lazy"' : "") + ">";
+      }).join("");
+      $("#d-track").scrollLeft = 0;
+    }
+    var many = t.img.length > 1;
+    $("#d-prev").hidden = $("#d-next").hidden = !many; $("#d-count").hidden = !many;
+    $("#d-prev").setAttribute("aria-label", tx("det.prev")); $("#d-next").setAttribute("aria-label", tx("det.next"));
+    $$(".modal-x", dm).forEach(function (b) { b.setAttribute("aria-label", tx("det.close")); });
+    $$("#d-track img").forEach(function (im, i) { im.alt = tx(t.title) + " — " + tx("det.photo") + " " + (i + 1); });
+    galCount();
+    $("#d-tag").textContent = tx(t.tag);
+    $("#d-title").textContent = tx(t.title);
+    $("#d-facts").innerHTML = t.facts.map(function (k, i) { return "<li>" + (i ? ICO.pin : ICO.time) + "<span>" + esc(tx(k)) + "</span></li>"; }).join("");
+    $("#d-lead").textContent = tx(t.lead);
+    $("#d-prog").innerHTML = c.prog.map(function (r) { return "<li><b>" + esc(r[0]) + "</b><span>" + esc(r[1]) + "</span></li>"; }).join("");
+    $("#d-approx").textContent = c.approx ? tx("det.approx") : "";
+    li($("#d-incl"), c.incl);
+    li($("#d-extra"), c.extra); $("#d-extra-box").hidden = !c.extra.length;
+    $("#d-note").textContent = c.note;
+    $("#d-more").hidden = !t.more; if (t.more) $("#d-more").setAttribute("href", t.more);
+    $("#d-price").textContent = tx(t.price); $("#d-pp").textContent = tx(t.pp);
+  }
+  function galCount() {
+    var tr = $("#d-track"), n = tr.children.length, i = Math.round(tr.scrollLeft / (tr.clientWidth || 1));
+    $("#d-count").textContent = (Math.min(i, n - 1) + 1) + " / " + n;
+    $("#d-prev").disabled = i <= 0; $("#d-next").disabled = i >= n - 1;
+  }
+  var galRaf = 0;
+  $("#d-track").addEventListener("scroll", function () { if (!galRaf) galRaf = requestAnimationFrame(function () { galRaf = 0; galCount(); }); }, { passive: true });
+  function galGo(dir) { var tr = $("#d-track"); tr.scrollBy({ left: dir * tr.clientWidth, behavior: "smooth" }); }
+  $("#d-prev").addEventListener("click", function () { galGo(-1); });
+  $("#d-next").addEventListener("click", function () { galGo(1); });
+  function lockScroll(on) {   // iOS Safari ignores overflow:hidden on <html> for touch scrolling, so pin the body
+    var b = document.body;
+    if (on) { dScrollY = window.scrollY; b.style.position = "fixed"; b.style.top = -dScrollY + "px"; b.style.left = "0"; b.style.right = "0"; document.documentElement.classList.add("modal-open"); }
+    else { b.style.position = b.style.top = b.style.left = b.style.right = ""; document.documentElement.classList.remove("modal-open"); var h = document.documentElement, sb = h.style.scrollBehavior; h.style.scrollBehavior = "auto"; window.scrollTo(0, dScrollY); h.style.scrollBehavior = sb; }
+  }
+  function openDet(id, opener, fromHash) {
+    if (!TS[id]) return;
+    dCur = id; dLast = opener || null;
+    renderDet();
+    try { if ("scrollRestoration" in history) history.scrollRestoration = "manual"; } catch (e) {}   // we put the page back ourselves
+    if (!fromHash) { try { history.pushState({ ts: id }, "", "#tour-" + id); dPushed = true; } catch (e) { dPushed = false; } }
+    dm.hidden = false; lockScroll(true); updateSticky();
+    $("#d-scroll").scrollTop = 0; $("#d-track").scrollLeft = 0; galCount();
+    setTimeout(function () { try { dm.querySelector(".ts-card").focus({ preventScroll: true }); } catch (e) {} }, 30);
+    track("view_tour", { tour: id });
+  }
+  function hideDet() {
+    if (dm.hidden) return;
+    dm.hidden = true; lockScroll(false); updateSticky();
+    var y = dScrollY; requestAnimationFrame(function () { if (Math.abs(window.scrollY - y) > 2) window.scrollTo(0, y); try { history.scrollRestoration = "auto"; } catch (e) {} });
+    if (dPendingBook) { var t = dPendingBook; dPendingBook = null; $("#f-tour").value = t; openQuick(t); track("select_tour", { tour: t, place: "tour_sheet" }); return; }
+    if (dLast && dLast.focus) try { dLast.focus({ preventScroll: true }); } catch (e) {}
+  }
+  function closeDet() {
+    if (dPushed) { dPushed = false; history.back(); return; }   // popstate hides it
+    try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
+    hideDet();
+  }
+  window.addEventListener("popstate", function () {
+    var m = /^#tour-([a-z0-9]+)$/.exec(location.hash);
+    if (m && TS[m[1]]) { if (dm.hidden || dCur !== m[1]) openDet(m[1], null, true); dPushed = true; return; }
+    dPushed = false; hideDet();
+  });
   $$("[data-det]").forEach(function (bt) {
-    bt.addEventListener("click", function () { dCur = bt.getAttribute("data-det"); dLast = bt; renderDet(); dm.hidden = false; document.documentElement.classList.add("modal-open"); dm.querySelector(".modal-card").scrollTop = 0; track("view_tour", { tour: dCur }); });
+    bt.addEventListener("click", function (e) { e.preventDefault(); openDet(bt.getAttribute("data-det"), bt); });
   });
   $$("[data-dclose]", dm).forEach(function (b) { b.addEventListener("click", closeDet); });
-  document.addEventListener("keydown", function (e) { if (!dm.hidden && e.key === "Escape") closeDet(); });
-  $("#d-book").addEventListener("click", function (e) { e.preventDefault(); var t = dCur; dm.hidden = true; $("#f-tour").value = t; openQuick(t); track("select_tour", { tour: t, place: "details" }); });
-  new MutationObserver(renderDet).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
+  $("#d-more").addEventListener("click", function (e) { e.preventDefault(); var target = this.getAttribute("href"); dPendingBook = null; closeDet(); setTimeout(function () { var el = document.querySelector(target); if (el) el.scrollIntoView({ behavior: "smooth" }); }, 80); });
+  $("#d-book").addEventListener("click", function (e) { e.preventDefault(); dPendingBook = dCur; closeDet(); });
+  document.addEventListener("keydown", function (e) {
+    if (dm.hidden) return;
+    if (e.key === "Escape") { e.preventDefault(); closeDet(); }
+    else if (e.key === "ArrowRight" && TS[dCur].img.length > 1) galGo(1);
+    else if (e.key === "ArrowLeft" && TS[dCur].img.length > 1) galGo(-1);
+    else if (e.key === "Tab") {
+      var f = $$("button,a[href]", dm).filter(function (x) { return x.offsetParent !== null && !x.disabled; });
+      if (!f.length) return;
+      if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
+      else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+    }
+  });
+  new MutationObserver(function () { if (!dm.hidden) renderDet(true); }).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
   $$("[data-tour],[data-quick]").forEach(function (a) {
     a.addEventListener("click", function (e) {
       var t = a.getAttribute("data-tour") || a.getAttribute("data-quick");
@@ -2366,7 +2530,7 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
       moving = true; clearTimeout(idleTimer);
       idleTimer = setTimeout(function () { moving = false; updateSticky(); }, 350);
     }
-    var show = window.scrollY > heroLimit && !nearForm && modal.hidden && !(isIOS && moving);
+    var show = window.scrollY > heroLimit && !nearForm && modal.hidden && dm.hidden && !(isIOS && moving);
     sticky.classList.toggle("show", show);
     sticky.setAttribute("aria-hidden", String(!show));
     var b = sticky.querySelector("button"); if (b) b.tabIndex = show ? 0 : -1;
@@ -2444,7 +2608,9 @@ if(ios)c+=" ios";d.className+=c;})(document.documentElement);</script>
     var h = document.documentElement, sb = h.style.scrollBehavior;
     h.style.scrollBehavior = "auto"; t.scrollIntoView(); h.style.scrollBehavior = sb;
   }
-  if (location.hash) {
+  var hashTour = /^#tour-([a-z0-9]+)$/.exec(location.hash);
+  if (hashTour && TS[hashTour[1]]) openDet(hashTour[1], null, true);
+  else if (location.hash) {
     requestAnimationFrame(toHash);
     window.addEventListener("load", function () { setTimeout(toHash, 60); });
   }

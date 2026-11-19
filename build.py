@@ -56,6 +56,15 @@ def page(lang, key, url):
     # serve WebP copies of every photo (made below); OG/Twitter images stay JPEG for link previews
     body = re.sub(r'(?<!\.com)/img/([A-Za-z0-9_.-]+)\.jpg', r'/img/\1.webp', body)
     script = re.sub(r'/img/([A-Za-z0-9_.-]+)\.jpg', r'/img/\1.webp', script)
+    # responsive images: <img sizes=...> without srcset gets the WebP widths made below
+    def add_srcset(m):
+        tag = m.group(0)
+        if 'srcset=' in tag or 'sizes=' not in tag: return tag
+        name = re.search(r'src="/img/([A-Za-z0-9_.-]+)\.webp"', tag)
+        ss = name and srcset(name.group(1))
+        return tag.replace(' sizes=', ' srcset="%s" sizes=' % ss, 1) if ss else tag
+    body = re.sub(r'<img [^>]+>', add_srcset, body)
+    script = script.replace('{}/*IMGW*/', json.dumps(WIDTHS, separators=(',', ':')))
     for b in ['ru', 'en', 'fr', 'vi']:   # pressed state of the language buttons
         body = body.replace('data-lang="%s" aria-pressed="%s"' % (b, 'true' if b == 'ru' else 'false'),
                             'data-lang="%s" aria-pressed="%s"' % (b, 'true' if b == lang else 'false'))
@@ -68,14 +77,32 @@ shutil.copy('site2/_headers', OUT + '/_headers')
 shutil.copytree('site2/fonts', OUT + '/fonts')
 from PIL import Image
 from grade import grade
-for fn in os.listdir(OUT + '/img'):
-    if fn.endswith('.jpg'):
+# only photos the page uses are processed and published (plus hero.jpg for link previews)
+USED = set(re.findall(r'/img/([A-Za-z0-9_.-]+)\.jpg', src)) | {'hero'}
+WIDTHS = {}   # name -> widths available as WebP, smallest first; the full size is <name>.webp
+for fn in sorted(os.listdir(OUT + '/img')):
+    if fn.endswith('.jpg') and fn[:-4] in USED:
         im = Image.open(OUT + '/img/' + fn)
         if not fn.startswith('license'):   # documents stay as scanned
             im = grade(im, sharpen=fn.startswith(('sea-', 'real-')))
-        im.convert('RGB').save(OUT + '/img/' + fn[:-4] + '.webp', 'WEBP', quality=74, method=6)
+        im = im.convert('RGB')
+        im.save(OUT + '/img/' + fn[:-4] + '.webp', 'WEBP', quality=74, method=6)
+        ws = [] if fn.startswith('hero') else [w for w in (480, 960) if im.width >= w * 1.25]
+        for w in ws:
+            im.resize((w, round(im.height * w / im.width)), Image.LANCZOS).save(OUT + '/img/%s-%d.webp' % (fn[:-4], w), 'WEBP', quality=74, method=6)
+        if ws: WIDTHS[fn[:-4]] = ws + [im.width]
+def srcset(name):
+    w = WIDTHS.get(name)
+    return w and ', '.join('/img/%s%s.webp %dw' % (name, '' if i == len(w) - 1 else '-%d' % x, x) for i, x in enumerate(w))
 open(OUT + '/index.html', 'w', encoding='utf-8').write(page('en', 'x', BASE + '/'))
 for l in ['ru', 'en', 'fr', 'vi']:
     os.makedirs('%s/%s' % (OUT, l))
     open('%s/%s/index.html' % (OUT, l), 'w', encoding='utf-8').write(page(l, l, '%s/%s/' % (BASE, l)))
-print('built:', sorted(os.listdir(OUT)))
+# drop files no page refers to (unused photos, JPEG originals already served as WebP)
+pages = ''.join(open(os.path.join(r, f), encoding='utf-8').read() for r, _, fs in os.walk(OUT) for f in fs if f.endswith('.html'))
+refs = set(re.findall(r'/img/([A-Za-z0-9_.-]+)', pages)) | {'hero.jpg'}
+for fn in os.listdir(OUT + '/img'):
+    base = re.sub(r'-(480|960)\.webp$', '.webp', fn)
+    if fn not in refs and not (base != fn and base in refs):
+        os.remove(OUT + '/img/' + fn)
+print('built:', sorted(os.listdir(OUT)), len(os.listdir(OUT + '/img')), 'images')
