@@ -45,7 +45,7 @@ def jsonld(lang, url, d):
         'geo': {'@type': 'GeoCoordinates', 'latitude': 12.2172849, 'longitude': 109.1821677},
         'hasMap': 'https://www.google.com/maps/place/C%C3%B4ng+ty+TNHH+Pronet+Services/@12.2172849,109.1821677,18z/data=!4m6!3m5!1s0x31705d0a87f86039:0x5287dd2b9c3a6234!8m2!3d12.2172849!4d109.1821677!16s%2Fg%2F11z87fyy1q',
         'areaServed': 'Nha Trang, Khánh Hòa', 'currenciesAccepted': 'VND', 'priceRange': '640 000 – 9 500 000 VND',
-        'sameAs': ['https://t.me/Boat_nhatrang', 'https://www.facebook.com/profile.php?id=61594450346439', 'https://zalo.me/84389935306']},
+        'sameAs': ['https://t.me/Boat_nhatrang', 'https://www.facebook.com/share/1SutC7ffGe/', 'https://zalo.me/84389935306']},
       {'@type': 'WebPage', '@id': url + '#page', 'url': url, 'name': d['meta.title'], 'description': SEO[lang][0], 'inLanguage': lang,
        'isPartOf': {'@type': 'WebSite', '@id': BASE + '/#site', 'url': BASE + '/', 'name': 'PRONET Travel', 'publisher': {'@id': org}},
        'about': {'@id': org}, 'primaryImageOfPage': BASE + '/img/hero.jpg'},
